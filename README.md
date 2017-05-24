@@ -23,7 +23,7 @@ Take a look at the sample project to find out how to use it.
 
 To manually install the framework, drag and drop the `IPDFCameraViewController/IPDFCameraViewController.h` and `IPDFCameraViewController/IPDFCameraViewController.m` files into your project.
 
-### Cocoapods
+### CocoaPods
 
 Add the following to your Podfile:
 
