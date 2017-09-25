@@ -302,7 +302,7 @@
     }
 }
 
-- (void)focusAtPoint:(CGPoint)point completionHandler:(void(^)())completionHandler
+- (void)focusAtPoint:(CGPoint)point completionHandler:(void(^)(void))completionHandler
 {
     AVCaptureDevice *device = self.captureDevice;
     CGPoint pointOfInterest = CGPointZero;
@@ -455,7 +455,7 @@ void saveCGImageAsJPEGToFilePath(CGImageRef imageRef, NSString *filePath)
     }
 }
 
-- (void)hideGLKView:(BOOL)hidden completion:(void(^)())completion
+- (void)hideGLKView:(BOOL)hidden completion:(void(^)(void))completion
 {
     [UIView animateWithDuration:0.1 animations:^
     {
