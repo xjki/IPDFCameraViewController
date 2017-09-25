@@ -486,18 +486,6 @@ void saveCGImageAsJPEGToFilePath(CGImageRef imageRef, NSString *filePath)
     rectangleCoordinates[@"inputBottomLeft"] = [CIVector vectorWithCGPoint:rectangleFeature.bottomLeft];
     rectangleCoordinates[@"inputBottomRight"] = [CIVector vectorWithCGPoint:rectangleFeature.bottomRight];
     image = [image imageByApplyingFilter:@"CIPerspectiveCorrection" withInputParameters:rectangleCoordinates];
-
-    // Fix landscape orientiation in iOS 10 by rotating image
-    if ([[[UIDevice currentDevice] systemVersion] compare:@"10.0" options:NSNumericSearch] != NSOrderedAscending) {
-        CIFilter *transform = [CIFilter filterWithName:@"CIAffineTransform"];
-        [transform setValue:image forKey:kCIInputImageKey];
-        NSValue *rotation = [NSValue valueWithCGAffineTransform:CGAffineTransformMakeRotation((CGFloat) (-90 * (M_PI / 180)))];
-        if ([transform respondsToSelector:@selector(setValue:forKey:)]) {
-            [transform setValue:rotation forKey:[NSString stringWithFormat:@"inputTransform"]];
-        }
-        image = [transform outputImage];
-    }
-
     return image;
 }
 
