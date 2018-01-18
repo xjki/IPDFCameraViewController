@@ -38,6 +38,7 @@
 
 @property (nonatomic, assign) BOOL forceStop;
 @property (nonatomic, assign) CGSize intrinsicContentSize;
+@property (atomic) CGRect cachedBounds; // self.bounds can only be accessed on main thread
 
 @end
 
@@ -210,7 +211,7 @@
             [EAGLContext setCurrentContext:_context];
         }
         [_glkView bindDrawable];
-        [_coreImageContext drawImage:image inRect:self.bounds fromRect:[self cropRectForPreviewImage:image]];
+        [_coreImageContext drawImage:image inRect:self.cachedBounds fromRect:[self cropRectForPreviewImage:image]];
         [_glkView display];
         
         if(_intrinsicContentSize.width != image.extent.size.width) {
@@ -238,10 +239,10 @@
     CGFloat cropHeight = image.extent.size.height;
     if (image.extent.size.width>image.extent.size.height) {
         cropWidth = image.extent.size.width;
-        cropHeight = cropWidth*self.bounds.size.height/self.bounds.size.width;
+        cropHeight = cropWidth*self.cachedBounds.size.height/self.cachedBounds.size.width;
     }else if (image.extent.size.width<image.extent.size.height) {
         cropHeight = image.extent.size.height;
-        cropWidth = cropHeight*self.bounds.size.width/self.bounds.size.height;
+        cropWidth = cropHeight*self.cachedBounds.size.width/self.cachedBounds.size.height;
     }
     return CGRectInset(image.extent, (image.extent.size.width-cropWidth)/2, (image.extent.size.height-cropHeight)/2);
 }
@@ -593,6 +594,12 @@ void saveCGImageAsJPEGToFilePath(CGImageRef imageRef, NSString *filePath)
 BOOL rectangleDetectionConfidenceHighEnough(float confidence)
 {
     return (confidence > 1.0);
+}
+
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
+    self.cachedBounds = self.bounds;
 }
 
 @end
