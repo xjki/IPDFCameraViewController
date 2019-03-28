@@ -1,5 +1,5 @@
 
-![Screenshot](https://raw.githubusercontent.com/mmackh/IPDFCameraViewController/master/mockup.png)
+This is fork of now removed IPDFCameraViewController library by https://github.com/mmackh, see https://twitter.com/mmackh/status/998269224752644097 for reasons.
 
 # IPDFCameraViewController
 
